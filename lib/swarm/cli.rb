@@ -97,10 +97,14 @@ module Swarm
       return "no swarm tasks in this repo yet — run /swarm-plugin:spawn" if tasks.empty?
 
       header = format("%-24s %-10s %-8s %s", "TASK ID", "STATUS", "ELAPSED", "PROMPT")
+      # Colors add invisible bytes to the status column, so pad the raw string
+      # first and only then wrap it in ANSI codes.
       rows = tasks.sort_by(&:started_at).reverse.map do |t|
-        format("%-24s %-10s %-8s %s", t.id, t.status, t.elapsed, truncate(t.prompt_first_line, 60))
+        status_padded = format("%-10s", t.status)
+        colored_status = Color.status(t.status.to_s) + status_padded[t.status.to_s.length..]
+        format("%-24s %s %-8s %s", t.id, colored_status, t.elapsed, truncate(t.prompt_first_line, 60))
       end
-      ([header, "-" * header.length] + rows).join("\n")
+      ([Color.bold(header), Color.dim("-" * header.length)] + rows).join("\n")
     end
 
     def refresh(task)
