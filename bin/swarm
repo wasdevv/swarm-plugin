@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+begin
+  require_relative "../lib/swarm"
+  puts Swarm.run(ARGV, Dir.pwd)
+rescue Exception => e # rubocop:disable Lint/RescueException -- fail-safe: never break the session
+  begin
+    if (dest = ENV["SWARM_DEBUG"]) && !dest.empty?
+      File.open(dest, "a") { |f| f.puts("#{e.class}: #{e.message}", e.backtrace) }
+    end
+  rescue StandardError
+    nil
+  end
+  puts "swarm: #{e.message}"
+end
+exit 0
