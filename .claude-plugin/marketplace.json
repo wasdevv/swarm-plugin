@@ -1,0 +1,13 @@
+{
+  "name": "swarm-plugin",
+  "owner": {
+    "name": "wasdevv"
+  },
+  "plugins": [
+    {
+      "name": "swarm-plugin",
+      "source": "./",
+      "description": "Run Claude Code against N isolated Git worktrees in parallel: /swarm-plugin:spawn creates the fanout, review each attempt's diff, then merge the best or open a PR — all from inside your current Claude Code session."
+    }
+  ]
+}
