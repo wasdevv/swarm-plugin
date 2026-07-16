@@ -1,7 +1,7 @@
 {
   "name": "swarm-plugin",
   "description": "Run Claude Code against N isolated Git worktrees in parallel: /swarm-plugin:spawn creates the fanout, review each attempt's diff, then merge the best or open a PR — all from inside your current Claude Code session.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": {
     "name": "wasdevv",
     "email": "o.u.f.acrazzy@gmail.com"

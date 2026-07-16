@@ -20,6 +20,7 @@ module Swarm
       when "merge"    then merge_cmd(rest)
       when "discard"  then discard_cmd(rest)
       when "pr"       then pr_cmd(rest)
+      when "metrics"  then metrics_cmd
       when nil, "-h", "--help" then help
       else "swarm: unknown command '#{cmd}' (try -h)"
       end
@@ -37,6 +38,7 @@ module Swarm
           swarm merge <task-id>        merge task branch (--no-ff) and remove worktree
           swarm discard <task-id>      remove worktree and delete branch without merging
           swarm pr <task-id>           push branch and open GitHub PR via gh
+          swarm metrics                aggregated stats across all repos (keeper rate, elapsed, activity)
       HELP
     end
 
@@ -216,6 +218,15 @@ module Swarm
 
     def gh_available?
       ENV["PATH"].to_s.split(File::PATH_SEPARATOR).any? { |p| File.executable?(File.join(p, "gh")) }
+    end
+
+    # ─── metrics ────────────────────────────────────────────────────────────
+
+    def metrics_cmd
+      tasks = Store.all
+      return "no swarm tasks yet — run /swarm-plugin:spawn to start one" if tasks.empty?
+
+      Metrics.call(tasks)
     end
 
     # ─── shared ─────────────────────────────────────────────────────────────

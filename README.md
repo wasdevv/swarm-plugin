@@ -50,8 +50,9 @@ Sometimes there's more than one way to make a change and you want to see them si
 | `/swarm-plugin:merge <task-id>`       | `merge`      | Commits pending changes, `git merge --no-ff`, removes worktree             |
 | `/swarm-plugin:discard <task-id>`     | `discard`    | Kills the agent (if running), removes worktree, deletes branch             |
 | `/swarm-plugin:pr <task-id>`          | `pr`         | Pushes branch and opens a GitHub PR via `gh`                               |
+| `/swarm-plugin:metrics`               | `metrics`    | Aggregated stats across all repos: keeper rate, agent success, elapsed medians, activity |
 
-The same six verbs also work directly from your shell as `swarm <verb> …` (add `swarm-plugin/bin` to your `PATH`).
+The same seven verbs also work directly from your shell as `swarm <verb> …` (add `swarm-plugin/bin` to your `PATH`).
 
 ## Where state lives
 
